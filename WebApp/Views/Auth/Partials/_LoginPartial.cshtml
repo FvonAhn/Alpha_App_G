@@ -1,21 +1,20 @@
 ﻿@model LoginViewModel
 
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Log In";
 }
-
 <div class="background-login"></div>
 <div class="container login">
     <h1 class="header-login">@ViewData["Title"]</h1>
-    <form asp-controller="Auth" asp-action="Lgoin" method="post" class="form-group login-form">
+    <form asp-controller="Auth" asp-action="Login" method="post" class="form-group login-form">
         <div class="form-group-email">
             <label asp-for="Email"></label>
-            <input asp-for="Email" class="form-control" placeholder="@Html.DisplayFor(m => m.Email)">
+            <input asp-for="Email" class="form-control" placeholder="Enter Your Email">
             <span asp-validation-for="Email" class="error-message"></span>
         </div>
         <div class="form-group-password">
             <label asp-for="Password"></label>
-            <input asp-for="Password" class="form-control" placeholder="@Html.DisplayFor(m => m.Password)">
+            <input asp-for="Password" class="form-control" placeholder="Enter Your Password">
             <span asp-validation-for="Password" class="error-message"></span>
         </div>
         <div class="form-check-label">
@@ -25,6 +24,6 @@
         <button type="submit" class="btn custom">Log In</button>
     </form>
     <div class="text-link">
-        <p>Don't have an account? <a asp-action="Register">Sign Up</a></p>
+        <p>Don't have an account? <a asp-action="Index" asp-route-view="Register">Sign Up</a></p>
     </div>
 </div>

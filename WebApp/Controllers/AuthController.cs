@@ -1,19 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     public class AuthController : Controller
     {
-        [HttpPost]
-        public IActionResult Register()
+        [HttpGet]
+        public IActionResult Index(string view = "Login")
         {
-            return View();
+            return View(model: view);
         }
 
-        [HttpGet]
-        public IActionResult Login()
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+                return View("Index", "Register");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+                return View("Index", "Login");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
