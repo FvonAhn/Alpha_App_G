@@ -75,7 +75,7 @@ html, body {
     font-size: 16px;
     font-weight: var(--font-regular);
     color: var(--Heading);
-    background-color: var(--Surface);
+    background-color: var(--Background);
 }
 
 a {
@@ -104,22 +104,20 @@ i {
 
 .background-login {
     position: relative;
-    top: 5px;
     background-color: var(--Surface);
     height: 700px;
     width: 580px;
     border-radius: 14px;
-    box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 0 0 rgba(0, 0, 0, 0.1);
 }
 
 .background-signup {
     position: relative;
-    top: 5px;
     background-color: var(--Surface);
     height: 900px;
     width: 580px;
     border-radius: 14px;
-    box-shadow: 0 3px 0 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 0 0 rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -130,7 +128,6 @@ i {
     align-items: center;
     background-color: var(--Surface);
     border-radius: 14px;
-    box-shadow: 0 6px 0 0 rgba(0, 0, 0, 0.1);
 }
 
 .login {

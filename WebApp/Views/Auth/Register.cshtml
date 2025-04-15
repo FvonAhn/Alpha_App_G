@@ -1,3 +1,46 @@
-﻿@{
+﻿@model RegisterViewModel
 
+@{
+    ViewData["Title"] = "Create an Account";
 }
+
+<div class="background-signup"></div>
+<div class="container signup">
+    <h1 class="header-create">@ViewData["Title"]</h1>
+
+    <form asp-controller="Auth" asp-action="Register" method="post" class="form-group">
+
+        <div class="form-group-name">
+            <label asp-for="FullName"></label>
+            <input asp-for="FullName" class="form-control" placeholder="@Html.DisplayFor(m => m.FullName)">
+            <span asp-validation-for="FullName" class="error-message"></span>
+        </div>
+
+        <div class="form-group-email">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" placeholder="@Html.DisplayFor(m => m.Email)">
+            <span asp-validation-for="Email" class="error-message"></span>
+        </div>
+
+        <div class="form-group-password">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" placeholder="@Html.DisplayFor(m => m.Password)">
+            <span asp-validation-for="Password" class="error-message"></span>
+        </div>
+        <div class="form-group-confirm-password">
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" class="form-control" placeholder="@Html.DisplayFor(m => m.ConfirmPassword)">
+            <span asp-validation-for="ConfirmPassword" class="error-message"></span>
+        </div>
+        <div class="form-check-label">
+            <input asp-for="TermsAndConditions" class="form-check-input">
+            <label asp-for="TermsAndConditions"></label>
+            I agree to the <a href="#">Terms and Conditions</a>
+            <span asp-validation-for="TermsAndConditions" class="error-message"></span>
+        </div>
+        <button type="submit" class="btn custom">Create Account</button>
+    </form>
+    <div class="text-link">
+        <p>Already have an account? <a asp-action="Login">Login</a></p>
+    </div>
+</div>
