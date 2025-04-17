@@ -1,18 +1,26 @@
-﻿@model string
+﻿@model object
 
 @{
     ViewData["Title"] = "Authentication";
 }
 
 <div class="center-screen">
-   
-    @if (Model == "Register")
+    @if (TempData["Success"] != null)
     {
-        <partial name="Partials/_RegisterPartial" model="new RegisterViewModel()" />
+        <div class="ac-success">@TempData["Success"]</div>
+    }
+
+    @if (ViewBag.View == "Register")
+    {
+        <partial name="Partials/_RegisterPartial" model="Model as RegisterViewModel ?? new RegisterViewModel()" />
     }
     else
     {
-        <partial name="Partials/_LoginPartial" model="new LoginViewModel()" />
+        <partial name="Partials/_LoginPartial" model="Model as LoginViewModel ?? new LoginViewModel()" />
     }
 
 </div>
+
+@section Scripts {
+    <script src="~/js/authValidation.js"></script>
+}

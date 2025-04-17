@@ -8,36 +8,36 @@
 <div class="container signup">
     <h1 class="header-create">@ViewData["Title"]</h1>
 
-    <form asp-controller="Auth" asp-action="Register" method="post" class="form-group">
+    <form id="auth-register" asp-controller="Auth" asp-action="Register" method="post" class="form-group">
 
         <div class="form-group-name">
             <label asp-for="FullName"></label>
-            <input asp-for="FullName" class="form-control" placeholder="Enter Your Full Name">
-            <span asp-validation-for="FullName" class="error-message"></span>
+            <input asp-for="FullName" class="form-control" placeholder="Enter Your Full Name" id="FullName">
+            <span asp-validation-for="FullName" class="error-message" data-valmsg-for="FullName"></span>
         </div>
 
         <div class="form-group-email">
             <label asp-for="Email"></label>
-            <input asp-for="Email" class="form-control" placeholder="Enter Your Email">
-            <span asp-validation-for="Email" class="error-message"></span>
+            <input asp-for="Email" class="form-control" placeholder="Enter Your Email" id="Email">
+            <span asp-validation-for="Email" class="error-message" data-valmsg-for="Email"></span>
         </div>
 
         <div class="form-group-password">
             <label asp-for="Password"></label>
-            <input asp-for="Password" class="form-control" placeholder="Enter Your Password">
-            <span asp-validation-for="Password" class="error-message"></span>
+            <input asp-for="Password" class="form-control" placeholder="Enter Your Password" id="Password">
+            <span asp-validation-for="Password" class="error-message" data-valmsg-for="Password"></span>
         </div>
         <div class="form-group-confirm-password">
             <label asp-for="ConfirmPassword"></label>
-            <input asp-for="ConfirmPassword" class="form-control" placeholder="Enter Your Password Again">
-            <span asp-validation-for="ConfirmPassword" class="error-message"></span>
+            <input asp-for="ConfirmPassword" class="form-control" placeholder="Enter Your Password Again" id="ConfirmPassword">
+            <span asp-validation-for="ConfirmPassword" class="error-message" data-valmsg-for="ConfirmPassword"></span>
         </div>
         <div class="form-check-label">
-            <input asp-for="TermsAndConditions" class="form-check-input">
+            <input asp-for="TermsAndConditions" class="form-check-input" id="TermsAndConditions">
             <label for="TermsAndConditions">
             I agree to the <a href="#">Terms and Conditions</a>
             </label>
-            <span asp-validation-for="TermsAndConditions" class="error-message"></span>
+            <span asp-validation-for="TermsAndConditions" class="error-message" data-valmsg-for="TermsAndConditions"></span>
         </div>
         <button type="submit" class="btn custom">Create Account</button>
     </form>
