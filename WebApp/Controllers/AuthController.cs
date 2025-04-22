@@ -1,5 +1,6 @@
 ﻿using Data.Context;
 using Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
@@ -30,7 +31,7 @@ namespace WebApp.Controllers
                 return View("Index", model);
             }
 
-            if (_context.Users.Any(u => u.Email == model.Email)) 
+            if (_context.Users.Any(x => x.Email == model.Email)) 
             {
                 ModelState.AddModelError("Email", "There is already a account with that Email");
                 ViewBag.View = "Register";
@@ -41,8 +42,10 @@ namespace WebApp.Controllers
             {
                 FullName = model.FullName,
                 Email = model.Email,
-                Password = model.Password,
             };
+
+            var hasher = new PasswordHasher<UserEntity>();
+            user.Password = hasher.HashPassword(user, model.Password);
 
             _context.Users.Add(user);
             _context.SaveChanges();
@@ -59,9 +62,27 @@ namespace WebApp.Controllers
                 ViewBag.View = "Login";
                 return View("Index", model);
             }
-                
 
-            return RedirectToAction("Index", "Home");
+            var user = _context.Users.FirstOrDefault(x => x.Email == model.Email);
+
+            if (user != null)
+            {
+                var hasher = new PasswordHasher<UserEntity>();
+                var result = hasher.VerifyHashedPassword(user, user.Password, model.Password);
+
+                if (result == PasswordVerificationResult.Success) 
+                {
+                    HttpContext.Session.SetString("Email", user.Email);
+                    return RedirectToAction("Index", "Home");
+                }
+
+            }
+
+            ModelState.AddModelError(string.Empty, "Wrong Email or Password!");
+            ViewBag.View = "Login";
+            return View("Index", model);
+            
+              
         }
     }
 }

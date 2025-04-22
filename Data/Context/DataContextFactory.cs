@@ -8,7 +8,7 @@ namespace Data.Context
         public DataContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
-            optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Development\\Alpha_App_G\\Data\\Database\\WebApp_Database.mdf;Integrated Security=True;Connect Timeout=30");
+            optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Development\\Alpha_App_G\\Data\\Database\\new_database.mdf;Integrated Security=True;Connect Timeout=30");
 
             return new DataContext(optionsBuilder.Options);
         }
