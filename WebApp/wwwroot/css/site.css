@@ -158,6 +158,7 @@ i {
     display: flex;
     flex-direction: row;
     background-color: var(--Background);
+    border: solid 1px var(--border);
 }
 
 .buttons-side {

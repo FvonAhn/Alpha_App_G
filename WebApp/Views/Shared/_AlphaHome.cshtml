@@ -13,12 +13,45 @@
 
     <div class="background-home">
         <sidebar class="side">
-
+            <div class="alpha-logo">
+                <img src="images/Alphalogo.svg" alt="Alpha Logotype">
+                <div class="alpha-text">alpha</div>
+            </div>
+            <div class="buttons-side">
+                <div class="btn-side">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <div>Projects</div>
+                </div>
+                <div class="btn-side">
+                    <i class="fa-solid fa-user-group"></i>
+                    <div class="text-btn-side">Team Members</div>
+                </div>
+            </div>
         </sidebar>
 
         <div class="container-home">
-            @RenderBody()
+
+            <div class="header-home">
+                <form class="search">
+                    <input class="search-field" type="text" name="query" placeholder="Enter search.." />
+                </form>
+                <div class="notification-bell">
+                    <span class="notification">1<i class="fa-regular fa-bell"></i></span>
+                </div>
+                <div class="drop-menu">
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+                <div class="divider"></div>
+                <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@User.Identity!.Name">
+                    <img src="images/Avatar1.svg" alt="Avatar 1">
+                </div>
+            </div>
+
+            <section class="main">
+                @RenderBody()
+            </section>
         </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
