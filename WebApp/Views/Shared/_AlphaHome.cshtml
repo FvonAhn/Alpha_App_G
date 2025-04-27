@@ -42,7 +42,7 @@
                     <i class="fa-solid fa-gear"></i>
                 </div>
                 <div class="divider"></div>
-                <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@User.Identity!.Name">
+                <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@(User?.Identity?.Name ?? "Guest")">
                     <img src="images/Avatar1.svg" alt="Avatar 1">
                 </div>
             </div>

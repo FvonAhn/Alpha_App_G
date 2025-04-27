@@ -1,7 +1,10 @@
 ﻿using Data.Context;
 using Data.Entities;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -55,7 +58,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -72,7 +75,16 @@ namespace WebApp.Controllers
 
                 if (result == PasswordVerificationResult.Success) 
                 {
-                    HttpContext.Session.SetString("Email", user.Email);
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, user.FullName ?? user.Email)
+                    };
+
+                    var identity = new ClaimsIdentity(claims, "Login");
+                    var principal = new ClaimsPrincipal(identity);
+
+                    await HttpContext.SignInAsync(principal);
+
                     return RedirectToAction("Index", "Home");
                 }
 
