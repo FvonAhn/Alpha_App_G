@@ -38,13 +38,33 @@
                 <div class="notification-bell">
                     <span class="notification">1<i class="fa-regular fa-bell"></i></span>
                 </div>
+
                 <div class="drop-menu">
                     <i class="fa-solid fa-gear"></i>
                 </div>
+
                 <div class="divider"></div>
-                <div class="avatar" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@(User?.Identity?.Name ?? "Guest")">
-                    <img src="images/Avatar1.svg" alt="Avatar 1">
+
+                <div class="avatar-container" style="position: relative;">
+                    <div class="avatar" onclick="toggleDropdownUser()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@(User?.Identity?.Name ?? "Guest")">
+                        <img src="@(@User.FindFirst("AvatarUrl")?.Value ?? "/images/Avatar1.svg")" alt="User Avatar" class="avatar-img">
+                    </div>
                 </div>
+
+                <!-- Dropdown -->
+                <div id="dropdown-user" class="dropdown-user">
+                    <div class="dropdown-user-info">
+                        <div class="avatar">
+                            <img src="@(@User.FindFirst("AvatarUrl")?.Value ?? "/images/Avatar1.svg")" alt="User Avatar" class="avatar-img">
+                        </div>
+                        <h7>@(User?.Identity?.Name ?? "Guest")</h7>
+                    </div>
+                    <div class="dropdown-logout" onclick="logout()">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <h7>Logout</h7>
+                    </div>
+                </div>
+
             </div>
 
             <section class="main">

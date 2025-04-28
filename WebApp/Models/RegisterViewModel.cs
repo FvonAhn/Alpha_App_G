@@ -27,6 +27,8 @@ namespace WebApp.Models
         [Display(Name = "Confirm Password", Prompt = "Confirm your password")]
         public string ConfirmPassword { get; set; } = null!;
 
+        public string? AvatarUrl { get; set; }
+
         [Display(Name = "Terms And Conditions", Prompt = "I accept the terms and conditions.")]
         [Range(typeof(bool), "true", "true", ErrorMessage = "You must accept the terms and conditions")]
         public bool TermsAndConditions { get; set; }            

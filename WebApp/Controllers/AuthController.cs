@@ -1,6 +1,7 @@
 ﻿using Data.Context;
 using Data.Entities;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -45,6 +46,7 @@ namespace WebApp.Controllers
             {
                 FullName = model.FullName,
                 Email = model.Email,
+                AvatarUrl = "/images/Avatar1.svg"
             };
 
             var hasher = new PasswordHasher<UserEntity>();
@@ -77,13 +79,24 @@ namespace WebApp.Controllers
                 {
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user.FullName ?? user.Email)
+                        new Claim(ClaimTypes.Name, user.FullName ?? user.Email),
+                        new Claim("AvatarUrl", user.AvatarUrl ?? "/images/Avatar1.svg")
                     };
 
-                    var identity = new ClaimsIdentity(claims, "Login");
+                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
 
-                    await HttpContext.SignInAsync(principal);
+                    var authProperties = new AuthenticationProperties
+                    {
+                        IsPersistent = model.RememberMe,
+                        ExpiresUtc = DateTime.UtcNow.AddDays(14)
+
+                    };
+
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme, 
+                        principal, 
+                        authProperties);
 
                     return RedirectToAction("Index", "Home");
                 }

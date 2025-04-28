@@ -11,9 +11,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Modal
 
-// Rolldown
+// Dropdown
+
+function toggleDropdownUser() {
+    var dropdown = document.getElementById('dropdown-user');
+    dropdown.classList.toggle('active');
+}
 
 // Theme
+
+// Logout
+
+function logout() {
+    window.location.href = '/Account/Logout';
+}
 
 
 
