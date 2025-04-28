@@ -509,7 +509,7 @@ h6 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 131px;
+    height: 179px;
     width: 300px;
     border-radius: 14px;
     background-color: var(--Surface);
@@ -534,6 +534,16 @@ h6 {
     border-radius: 14px;
     background-color: var(--Grey_100);
 }
+.dropdown-edit {
+    height: 48px;
+    width: 284px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 14px;
+    cursor: pointer;
+}
 
 .dropdown-logout {
     height: 48px;
@@ -544,6 +554,20 @@ h6 {
     padding: 1rem;
     border-radius: 14px;
     cursor: pointer;
+}
+
+/* Popups */
+
+.edit-success {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    color: var(--Dark_Red);
+    background-color: var(--Surface);
+    border-radius: 14px;
+    box-shadow: 0 8px 2px 0 var(--Black_20);
+    z-index: 2000;
 }
 
 /* sections */
@@ -593,6 +617,17 @@ h6 {
 
 /* modals */
 
+.modal-background,
+.modal-add-card {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1050;
+}
+
 .modal-background {
     background-color: var(--Background_20);
 }
@@ -623,7 +658,6 @@ h6 {
     margin: 1.7rem 0rem;
     height: 150px;
     width: 150px;
-    background-color: var(--Border_100);
     border-radius: 30px;
 }
 
@@ -669,6 +703,7 @@ h6 {
     outline: none;
     width: 96%;
 }
+
 /* views/pages */
 
 /* Images */

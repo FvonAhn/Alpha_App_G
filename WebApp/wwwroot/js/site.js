@@ -11,6 +11,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Modal
 
+function editProfileOpen() {
+    document.querySelector('.modal-background').style.display = 'block';
+    document.querySelector('.modal-add-card').style.display = 'block';
+}
+
+function editProfileClose() {
+    document.querySelector('.modal-background').style.display = 'none';
+    document.querySelector('.modal-add-card').style.display = 'none';
+}
+
+async function submitEditProfile() {
+    const form = document.querySelector('.modal-form');
+    const formData = document.querySelector(form);
+
+    const response = await fetch('/Account/Edit', {
+        method: 'POST',
+        body: formData
+    });
+    if (response.ok) {
+        editProfileClose();
+        showSuccesMessage("Profile updated")
+    }
+}
+
+function editSuccessMessage(message) {
+    const msg = documet.createElement('div');
+    msg.className = 'edit-success';
+    msg.innerText = message;
+
+    document.body.appendChild(msg);
+
+    setTimeout(() => {
+        msg.remove();
+    }, 2500);
+}
+
 // Dropdown
 
 function toggleDropdownUser() {

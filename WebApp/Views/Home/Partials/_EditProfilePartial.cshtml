@@ -1,0 +1,19 @@
+﻿@model WebApp.Models.UserEditViewModel
+
+<div class="modal-picture-wrapper">
+    <div class="modal-picture">
+        <img src="@Model.CurrentAvatarUrl" alt="Current Avatar">
+    </div>
+</div>
+<form asp-action="edit" method="post" enctype="multipart/form-data" class="modal-form">
+    <div class="modal-form-wrapper">
+        <label asp-for="FullName">Full Name</label>
+        <input asp-for="FullName" class="form-control" id="full-name" placeholder="Full Name" />
+    </div>
+    <div class="modal-form-wrapper">
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" class="form-control" id="email" placeholder="Email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <button type="button" class="btn" onclick="submitEditProfile()">Save</button>
+</form>

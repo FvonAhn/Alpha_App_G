@@ -79,7 +79,8 @@ namespace WebApp.Controllers
                 {
                     var claims = new List<Claim>
                     {
-                        new Claim(ClaimTypes.Name, user.FullName ?? user.Email),
+                        new Claim(ClaimTypes.Name, user.Email),
+                        new Claim("FullName", user.FullName ?? user.Email),
                         new Claim("AvatarUrl", user.AvatarUrl ?? "/images/Avatar1.svg")
                     };
 

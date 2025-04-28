@@ -46,12 +46,12 @@
                 <div class="divider"></div>
 
                 <div class="avatar-container" style="position: relative;">
-                    <div class="avatar" onclick="toggleDropdownUser()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@(User?.Identity?.Name ?? "Guest")">
+                    <div class="avatar" onclick="toggleDropdownUser()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@(@User.FindFirst("FullName")?.Value ?? "Guest")">
                         <img src="@(@User.FindFirst("AvatarUrl")?.Value ?? "/images/Avatar1.svg")" alt="User Avatar" class="avatar-img">
                     </div>
                 </div>
 
-                <!-- Dropdown -->
+                <!-- Dropdown Menu -->
                 <div id="dropdown-user" class="dropdown-user">
                     <div class="dropdown-user-info">
                         <div class="avatar">
@@ -59,12 +59,25 @@
                         </div>
                         <h7>@(User?.Identity?.Name ?? "Guest")</h7>
                     </div>
+                    <div class="dropdown-edit" onclick="editProfileOpen()">
+                        <i class="fa-solid fa-pen"></i>
+                        <h7>Edit Profile</h7>
+                    </div>
                     <div class="dropdown-logout" onclick="logout()">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <h7>Logout</h7>
                     </div>
                 </div>
 
+                <!-- Edit Profile Form -->
+                <div class="modal-background" onclick="editProfileClose()"></div>
+                <div class="modal-add-card">
+                    <div class="modal-top">
+                        <h3>Edit Profile</h3>
+                        <div class="close-window" onclick="editProfileClose()">X</div>
+                    </div>
+                    <partial name="Partials/_EditProfilePartial" model="Model" />
+                </div>
             </div>
 
             <section class="main">
