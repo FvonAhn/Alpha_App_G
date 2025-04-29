@@ -9,5 +9,8 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public decimal Budget { get; set; }
+
+        public int UserId { get; set; }
+        public UserEntity User { get; set; } = null!;
     }
 }

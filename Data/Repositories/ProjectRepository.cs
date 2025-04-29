@@ -72,6 +72,7 @@ namespace Data.Repositories
                 existingProject.StartDate = updatedProject.StartDate;
                 existingProject.EndDate = updatedProject.EndDate;
                 existingProject.Budget = updatedProject.Budget;
+     
 
                 await _context.SaveChangesAsync();
                 return true;
@@ -87,7 +88,7 @@ namespace Data.Repositories
 
         public virtual async Task<bool> DeleteProjectAsync(int id)
         {
-            var existingProject = _context.Projects.FirstOrDefault(x => x.Id == id);
+            var existingProject = await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
             if (existingProject == null) 
             {
                 return false; 
