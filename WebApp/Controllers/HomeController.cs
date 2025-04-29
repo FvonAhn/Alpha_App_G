@@ -13,7 +13,8 @@ namespace WebApp.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string section = "Projects")
         {
             var email = User.Identity?.Name;
             var user = _context.Users.FirstOrDefault(x => x.Email == email);
@@ -21,13 +22,24 @@ namespace WebApp.Controllers
             if (user == null)
                 return RedirectToAction("Login", "Auth");
 
-            var model = new UserEditViewModel
+            var profile = new UserEditViewModel
             {
                 Id = user.Id,
                 FullName = user.FullName,
                 Email = user.Email,
                 CurrentAvatarUrl = user.AvatarUrl
             };
+
+            var projects = _context.Projects.Where(x => x.Id == profile.Id).ToList();
+
+            var model = new HomeViewModel
+            {
+                Profile = profile,
+                Projects = projects
+            };
+
+            ViewData["Section"] = section;
+
 
             return View(model);
         }

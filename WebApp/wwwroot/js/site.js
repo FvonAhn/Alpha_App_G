@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 });
 
-// Modal
+// Modals
 
 function editProfileOpen() {
     document.querySelector('.modal-background').style.display = 'block';
@@ -34,6 +34,16 @@ async function submitEditProfile() {
         showSuccessMessage("Profile updated")
     }
 }
+
+function createProjectOpen() {
+    document.getElementById('create-project-modal').style.display = 'block';
+}
+
+function createProjectClose() {
+    document.getElementById('create-project-modal').style.display = 'none';
+}
+
+// Alerts
 
 function showSuccessMessage(message) {
     const msg = document.createElement('div');
@@ -65,7 +75,8 @@ function toggleDropdownUser() {
     var dropdown = document.getElementById('dropdown-user');
     dropdown.classList.toggle('active');
 }
-// Editing
+
+// Uploads
 
 function avatarUpload() {
     document.getElementById('avatar-upload').click();

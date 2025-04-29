@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Data.Entities.ProjectEntity>
+
+<div class="main-top">
+    <h2>Projects</h2>
+    <button class="btn main-btn" onclick="openCreateProjectModal()">+ Add Project</button>
+</div>
+<div class="main-mid">
+    <div class="main-link">ALL [<span id="project-count-all">@Model.Count()</span>]</div>
+    <div class="main-link">STARTED [<span id="project-count-started">0</span>]</div>
+    <div class="main-link">COMPLETED [<span id="project-count-completed">0</span>]</div>
+</div>
+<div class="main-bottom">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="no-projects">
+            <p>
+                No Projects found.
+                <a href="javascript:void(0);" onclick="openCreateProjectModal()" class="create-link">Create a new project.</a>
+            </p>
+        </div>
+    }
+    else
+    {
+        @foreach (var project in Model)
+        {
+            <div class="card-projects">
+                <div class="container-projects-top">
+                    <div class="container-projects-customer">
+                        <div class="container-projects-img"></div>
+                        <div class="container-projects-text">
+                            <h6 class="projectName">@project.ProjectName</h6>
+                            <p class="customerName">@project.ClientName</p>
+                        </div>
+                    </div>
+                    <div class="container-projects-menu">
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
+                </div>
+                <div class="container-projects-description">
+                    <span>@project.Description</span>
+                </div>
+            </div>
+        }
+    }
+</div>

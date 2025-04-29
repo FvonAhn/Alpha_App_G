@@ -257,34 +257,33 @@ h6 {
     cursor: pointer;
 }
 
-.btn-side {
+.side-link {
     border-radius: 14px;
     color: var(--Heading);
     padding-left: 1rem;
     width: 238px;
     height: 56px;
     display: flex;
-    flex-direction: row;
     align-items: center;
     gap: 12px;
     cursor: pointer;
 }
 
-    .btn-side:hover {
+    .side-link:hover {
         color: var(--Accent);
         background-color: var(--btn-side-hover);
     }
 
-        .btn-side:hover i {
+        .side-link:hover i {
             color: inherit;
         }
 
-    .btn-side:active {
+    .side-link:active {
         color: var(--Accent);
         background-color: var(--btn-side-hover);
     }
 
-        .btn-side:active i {
+        .side-link:active i {
             color: inherit;
         }
 
@@ -560,25 +559,25 @@ h6 {
 
 .alert-success {
     position: fixed;
-    top: 20px;
+    top: 0;
     left: 50%;
     padding: 10px 20px;
     color: var(--Dark_Green);
     background-color: var(--Surface);
-    border-radius: 14px;
-    box-shadow: 0 8px 2px 0 var(--Black_20);
+    border: solid 1px black;
+    border-radius: 8px;
     z-index: 2000;
 }
 
 .alert-error {
     position: fixed;
-    top: 20px;
+    top: 0;
     left: 50%;
     padding: 10px 20px;
     color: var(--Dark_Red);
     background-color: var(--Surface);
-    border-radius: 14px;
-    box-shadow: 0 8px 2px 0 var(--Black_20);
+    border: solid 1px black;
+    border-radius: 8px;
     z-index: 2000;
 }
 

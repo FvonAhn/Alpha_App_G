@@ -1,6 +1,90 @@
-﻿@model WebApp.Models.UserEditViewModel
+﻿@model WebApp.Models.HomeViewModel
 
 @{
     Layout = "_AlphaHome";
-    ViewData["Title"] = "Home";
+    var section = ViewData["Section"]?.ToString();
 }
+<sidebar class="side">
+    <div class="alpha-logo">
+        <img src="images/Alphalogo.svg" alt="Alpha Logotype">
+        <div class="alpha-text">alpha</div>
+    </div>
+    <div class="buttons-side">
+        <div class="btn-side">
+            <a href="/Home/Index?section=Projects" class="side-link">
+                <i class="fa-solid fa-briefcase"></i>
+                <div>Projects</div>
+            </a>
+        </div>
+        <div class="btn-side">
+            <a href="/Home/Index?section=TeamMembers" class="side-link">
+                <i class="fa-solid fa-user-group"></i>
+                <div class="text-btn-side">Team Members</div>
+            </a>
+        </div>
+    </div>
+</sidebar>
+
+<div class="container-home">
+
+    <div class="header-home">
+        <form class="search">
+            <input class="search-field" type="text" name="query" placeholder="Enter search.." />
+        </form>
+        <div class="notification-bell">
+            <span class="notification">1<i class="fa-regular fa-bell"></i></span>
+        </div>
+
+        <div class="drop-menu">
+            <i class="fa-solid fa-gear"></i>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="avatar-container" style="position: relative;">
+            <div class="avatar" onclick="toggleDropdownUser()" data-bs-toggle="tooltip" data-bs-placement="bottom" title="@(@User.FindFirst("FullName")?.Value ?? "Guest")">
+                <img src="@(@User.FindFirst("AvatarUrl")?.Value ?? "/images/Avatar1.svg")" alt="User Avatar" class="avatar-img">
+            </div>
+        </div>
+
+        <!-- Dropdown Menu -->
+        <div id="dropdown-user" class="dropdown-user">
+            <div class="dropdown-user-info">
+                <div class="avatar">
+                    <img src="@(@User.FindFirst("AvatarUrl")?.Value ?? "/images/Avatar1.svg")" alt="User Avatar" class="avatar-img">
+                </div>
+                <h7>@(User?.Identity?.Name ?? "Guest")</h7>
+            </div>
+            <div class="dropdown-edit" onclick="editProfileOpen()">
+                <i class="fa-solid fa-pen"></i>
+                <h7>Edit Profile</h7>
+            </div>
+            <div class="dropdown-logout" onclick="logout()">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <h7>Logout</h7>
+            </div>
+        </div>
+
+        <!-- Edit Profile Form -->
+        <div class="modal-background" onclick="editProfileClose()"></div>
+        <div class="modal-add-card">
+            <div class="modal-top">
+                <h3>Edit Profile</h3>
+                <div class="close-window" onclick="editProfileClose()">X</div>
+            </div>
+            <partial name="Partials/_EditProfilePartial" model="Model.Profile" />
+        </div>
+
+    </div>
+
+    <section class="main">
+        @if (ViewData["Section"]?.ToString() == "Projects")
+        {
+            @await Html.PartialAsync("Partials/_ProjectsPartial", Model.Projects)
+        }
+        else if (ViewData["Section"]?.ToString() == "TeamMembers")
+        {
+            @await Html.PartialAsync("Partials/_TeamMembersPartial")
+        }
+    </section>
+</div>
