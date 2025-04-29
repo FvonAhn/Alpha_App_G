@@ -1,19 +1,22 @@
 ﻿@model WebApp.Models.UserEditViewModel
 
 <div class="modal-picture-wrapper">
-    <div class="modal-picture">
-        <img src="@Model.CurrentAvatarUrl" alt="Current Avatar">
+    <div class="modal-picture" onclick="avatarUpload()">
+        <img id="avatar-preview"src="@Model.CurrentAvatarUrl" alt="Current Avatar">
     </div>
 </div>
-<form asp-action="edit" method="post" enctype="multipart/form-data" class="modal-form">
+
+<form asp-controller="Account" asp-action="UpdateProfile" method="post" enctype="multipart/form-data" class="modal-form">
+<input type="file" id="avatar-upload" name="NewAvatar" style="display: none;" onchange="previewAvatar(this)">
+    <input asp-for="Id" type="hidden"/>
     <div class="modal-form-wrapper">
         <label asp-for="FullName">Full Name</label>
         <input asp-for="FullName" class="form-control" id="full-name" placeholder="Full Name" />
     </div>
     <div class="modal-form-wrapper">
         <label asp-for="Email">Email</label>
-        <input asp-for="Email" class="form-control" id="email" placeholder="Email" />
+        <input asp-for="Email" class="form-control" id="email" placeholder="Email" /> 
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
-    <button type="button" class="btn" onclick="submitEditProfile()">Save</button>
+    <button type="submit" class="btn" onclick="submitEditProfile()">Save</button>
 </form>

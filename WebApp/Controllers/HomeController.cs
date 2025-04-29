@@ -23,6 +23,7 @@ namespace WebApp.Controllers
 
             var model = new UserEditViewModel
             {
+                Id = user.Id,
                 FullName = user.FullName,
                 Email = user.Email,
                 CurrentAvatarUrl = user.AvatarUrl

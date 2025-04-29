@@ -55,7 +55,7 @@ namespace WebApp.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            TempData["Success"] = "Account created. You may now log in.";
+            TempData["Success"] = "Account created.";
             return RedirectToAction("Index", new { view = "Login" });
         }
 

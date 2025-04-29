@@ -23,53 +23,40 @@ namespace WebApp.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Login", "Auth");
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Edit()
-        {
-            var email = User.Identity?.Name;
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
-
-            if (user == null)
-                return RedirectToAction("Login", "Auth");
-
-            var model = new UserEditViewModel
-            {
-                FullName = user.FullName,
-                Email = user.Email,
-                CurrentAvatarUrl = user.AvatarUrl,
-            };
-
-            return View(model);
+            return RedirectToAction("Index", "Auth");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UserEditViewModel model) 
+        public async Task<IActionResult> UpdateProfile(UserEditViewModel model) 
         {
             if (!ModelState.IsValid)
-                return View(model);
+            {
+                TempData["Error"] = "Invalid data.";
+                return RedirectToAction("Index", "Home");
+            }
 
-            var email = User.Identity?.Name;
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.Id);
 
             if (user == null)
+            {
+                TempData["Error"] = "No User was found.";
                 return RedirectToAction("Login", "Auth");
-
-            user.FullName = model.FullName;
+            }
 
             var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == model.Email && x.Id != user.Id);
 
             if (existingUser != null)
             {
-                ModelState.AddModelError("Email", "An account exists with this email.");
-                return View(model);
+                TempData["Error"] = "An account exists with this email.";
+                return RedirectToAction("Index", "Home");
             }
 
-            if(model.NewAvatar != null &&  model.NewAvatar.Length > 0)
+            user.FullName = model.FullName;
+            user.Email = model.Email;
+
+            if (model.NewAvatar != null && model.NewAvatar.Length > 0)
             {
-                var uploadsFolder = Path.Combine("wwwroot/uploads");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
                 Directory.CreateDirectory(uploadsFolder);
 
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.NewAvatar.FileName);
@@ -80,24 +67,23 @@ namespace WebApp.Controllers
                     await model.NewAvatar.CopyToAsync(stream);
                 }
 
-                user.AvatarUrl = "uploads" + fileName;
+                user.AvatarUrl = "/uploads/" + fileName;
             }
 
             await _context.SaveChangesAsync();
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.FullName ?? user.Email),
+                new Claim(ClaimTypes.Name, user.Email),
+                new Claim("FullName", user.FullName ?? user.Email),
                 new Claim("AvatarUrl", user.AvatarUrl ?? "/images/Avatar1.svg")
             };
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
-            TempData["Success"] = "Profile updated succesfully";
-            return RedirectToAction("Edit");
-
+            TempData["Success"] = "Profile updated.";
+            return RedirectToAction("Index", "Home");           
         }
-
     }
 }

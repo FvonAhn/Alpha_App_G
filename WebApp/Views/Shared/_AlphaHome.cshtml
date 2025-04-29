@@ -78,6 +78,7 @@
                     </div>
                     <partial name="Partials/_EditProfilePartial" model="Model" />
                 </div>
+
             </div>
 
             <section class="main">
@@ -90,5 +91,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @if (TempData["Success"] != null)
+    {
+        <script>
+            showSuccessMessage('@TempData["Success"]');
+        </script>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <script>
+            showErrorMessage('@TempData["Error"]');
+        </script>
+    }
 </body>
 </html>

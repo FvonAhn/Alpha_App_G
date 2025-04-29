@@ -556,12 +556,24 @@ h6 {
     cursor: pointer;
 }
 
-/* Popups */
+/* Alerts */
 
-.edit-success {
+.alert-success {
     position: fixed;
     top: 20px;
-    right: 20px;
+    left: 50%;
+    padding: 10px 20px;
+    color: var(--Dark_Green);
+    background-color: var(--Surface);
+    border-radius: 14px;
+    box-shadow: 0 8px 2px 0 var(--Black_20);
+    z-index: 2000;
+}
+
+.alert-error {
+    position: fixed;
+    top: 20px;
+    left: 50%;
     padding: 10px 20px;
     color: var(--Dark_Red);
     background-color: var(--Surface);
@@ -660,6 +672,12 @@ h6 {
     width: 150px;
     border-radius: 30px;
 }
+    .modal-picture img {
+        object-fit: cover;
+        height: 150px;
+        width: 150px;
+        border-radius: 30px;
+    }
 
 .modal-form {
     display: flex;

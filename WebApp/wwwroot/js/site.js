@@ -23,28 +23,40 @@ function editProfileClose() {
 
 async function submitEditProfile() {
     const form = document.querySelector('.modal-form');
-    const formData = document.querySelector(form);
+    const formData = new FormData(form);
 
-    const response = await fetch('/Account/Edit', {
+    const response = await fetch('/Account/UpdateProfile', {
         method: 'POST',
         body: formData
     });
     if (response.ok) {
         editProfileClose();
-        showSuccesMessage("Profile updated")
+        showSuccessMessage("Profile updated")
     }
 }
 
-function editSuccessMessage(message) {
-    const msg = documet.createElement('div');
-    msg.className = 'edit-success';
+function showSuccessMessage(message) {
+    const msg = document.createElement('div');
+    msg.className = 'alert-success';
     msg.innerText = message;
 
     document.body.appendChild(msg);
 
     setTimeout(() => {
         msg.remove();
-    }, 2500);
+    }, 3000);
+}
+
+function showErrorMessage(message) {
+    const msg = document.createElement('div');
+    msg.className = 'alert-error';
+    msg.innerText = message;
+
+    document.body.appendChild(msg);
+
+    setTimeout(() => {
+        msg.remove();
+    }, 3000);
 }
 
 // Dropdown
@@ -53,8 +65,22 @@ function toggleDropdownUser() {
     var dropdown = document.getElementById('dropdown-user');
     dropdown.classList.toggle('active');
 }
+// Editing
 
-// Theme
+function avatarUpload() {
+    document.getElementById('avatar-upload').click();
+}
+
+function previewAvatar(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById('avatar-preview').src = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+} // denna är avskriven från chatGpt. Jag kopierar aldrig rakt av.
 
 // Logout
 
