@@ -12,17 +12,17 @@ document.addEventListener('DOMContentLoaded', function () {
 // Modals
 
 function editProfileOpen() {
-    document.querySelector('.modal-background').style.display = 'block';
-    document.querySelector('.modal-add-card').style.display = 'block';
+    document.getElementById('edit-profile-bg').style.display = 'block';
+    document.getElementById('edit-profile-card').style.display = 'block';
 }
 
 function editProfileClose() {
-    document.querySelector('.modal-background').style.display = 'none';
-    document.querySelector('.modal-add-card').style.display = 'none';
+    document.getElementById('edit-profile-bg').style.display = 'none';
+    document.getElementById('edit-profile-card').style.display = 'none';
 }
 
 async function submitEditProfile() {
-    const form = document.querySelector('.modal-form');
+    const form = document.getElementById('update-profile');
     const formData = new FormData(form);
 
     const response = await fetch('/Account/UpdateProfile', {
@@ -36,11 +36,51 @@ async function submitEditProfile() {
 }
 
 function createProjectOpen() {
-    document.getElementById('create-project-modal').style.display = 'block';
+    const bg = document.getElementById('add-project-bg');
+    const card = document.getElementById('add-project-card');
+
+    if (!bg || !card) {
+        console.error('Element not found.')
+        return;
+    }
+    bg.style.display = 'block';
+    card.style.display = 'block';
 }
 
 function createProjectClose() {
-    document.getElementById('create-project-modal').style.display = 'none';
+    document.getElementById('add-project-bg').style.display = 'none';
+    document.getElementById('add-project-card').style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const closeBtn = document.querySelector('.close-window');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', createProjectClose);
+    }
+    const bg = document.getElementById('add-project-bg');
+    if (bg) {
+        bg.addEventListener('click', createProjectClose)
+    }
+})
+
+async function submitCreateProject() {
+
+    console.log("submitCreateProject called");
+
+    const form = document.getElementById('create-project');
+    const formData = new FormData(form);
+
+    const response = await fetch('/Home/CreateProject', {
+        method: 'POST',
+        body: formData
+    });
+    if (response.ok) {
+        createProjectClose();
+        showSuccessMessage("Project Created")
+    } else {
+        const errorText = await response.text();
+        showErrorMessage("Project not created" + errorText)
+    }
 }
 
 // Alerts

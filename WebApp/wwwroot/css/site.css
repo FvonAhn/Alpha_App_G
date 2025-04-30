@@ -278,12 +278,12 @@ h6 {
             color: inherit;
         }
 
-    .side-link:active {
+    .side-link.active {
         color: var(--Accent);
         background-color: var(--btn-side-hover);
     }
 
-        .side-link:active i {
+        .side-link.active i {
             color: inherit;
         }
 

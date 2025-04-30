@@ -2,22 +2,23 @@
 
 @{
     Layout = "_AlphaHome";
-    var section = ViewData["Section"]?.ToString();
+    var activeSection = ViewData["Section"]?.ToString() ?? "Projects";
 }
+
 <sidebar class="side">
     <div class="alpha-logo">
-        <img src="images/Alphalogo.svg" alt="Alpha Logotype">
+        <img src="~/images/Alphalogo.svg" alt="Alpha Logotype">
         <div class="alpha-text">alpha</div>
     </div>
     <div class="buttons-side">
         <div class="btn-side">
-            <a href="/Home/Index?section=Projects" class="side-link">
+            <a href="/Home/Index?section=Projects" class="side-link @(activeSection == "Projects" ? "active" : "")">
                 <i class="fa-solid fa-briefcase"></i>
                 <div>Projects</div>
             </a>
         </div>
         <div class="btn-side">
-            <a href="/Home/Index?section=TeamMembers" class="side-link">
+            <a href="/Home/Index?section=TeamMembers" class="side-link @(activeSection == "TeamMembers" ? "active" : "")">
                 <i class="fa-solid fa-user-group"></i>
                 <div class="text-btn-side">Team Members</div>
             </a>
@@ -66,8 +67,8 @@
         </div>
 
         <!-- Edit Profile Form -->
-        <div class="modal-background" onclick="editProfileClose()"></div>
-        <div class="modal-add-card">
+        <div class="modal-background" id="edit-profile-bg" onclick="editProfileClose()"></div>
+        <div class="modal-add-card" id="edit-profile-card">
             <div class="modal-top">
                 <h3>Edit Profile</h3>
                 <div class="close-window" onclick="editProfileClose()">X</div>
@@ -84,7 +85,10 @@
         }
         else if (ViewData["Section"]?.ToString() == "TeamMembers")
         {
-            @await Html.PartialAsync("Partials/_TeamMembersPartial")
+            @await Html.PartialAsync("Partials/_TeamMembersPartial", Model.TeamMembers)
         }
     </section>
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}
 </div>

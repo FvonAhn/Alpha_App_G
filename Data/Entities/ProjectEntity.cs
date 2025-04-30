@@ -3,6 +3,7 @@
     public class ProjectEntity
     {
         public int Id { get; set; }
+        public string? Image { get; set; }
         public string ProjectName { get; set; } = null!;
         public string ClientName { get; set; } = null!;
         public string Description { get; set; } = null!;

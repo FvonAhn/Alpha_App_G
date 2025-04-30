@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<form asp-controller="Account" asp-action="UpdateProfile" method="post" enctype="multipart/form-data" class="modal-form">
+<form asp-controller="Account" asp-action="UpdateProfile" method="post" enctype="multipart/form-data" class="modal-form" id="update-profile">
 <input type="file" id="avatar-upload" name="NewAvatar" style="display: none;" onchange="previewAvatar(this)">
     <input asp-for="Id" type="hidden"/>
     <div class="modal-form-wrapper">

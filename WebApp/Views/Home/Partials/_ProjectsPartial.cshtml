@@ -1,9 +1,18 @@
-﻿@model IEnumerable<Data.Entities.ProjectEntity>
+﻿@using Data.Entities
+@model IEnumerable<Data.Entities.ProjectEntity>
 
 <div class="main-top">
     <h2>Projects</h2>
-    <button class="btn main-btn" onclick="openCreateProjectModal()">+ Add Project</button>
+    <button class="btn main-btn" onclick="createProjectOpen()">+ Add Project</button>
 </div>
+
+<!-- Add Projects Modal -->
+<div class="modal-background" id="add-project-bg" onclick="createProjectClose()"></div>
+<div class="modal-add-card" id="add-project-card">
+    @await Html.PartialAsync("Partials/_CreateProjectPartial", new CreateProjectViewModel())
+</div>
+
+
 <div class="main-mid">
     <div class="main-link">ALL [<span id="project-count-all">@Model.Count()</span>]</div>
     <div class="main-link">STARTED [<span id="project-count-started">0</span>]</div>

@@ -1,4 +1,5 @@
 ﻿using Data.Context;
+using Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 
@@ -32,16 +33,58 @@ namespace WebApp.Controllers
 
             var projects = _context.Projects.Where(x => x.Id == profile.Id).ToList();
 
+            var teamMembers = _context.Users.Where(x => x.Id != user.Id).ToList();
+
             var model = new HomeViewModel
             {
                 Profile = profile,
-                Projects = projects
+                Projects = projects,
+                TeamMembers = teamMembers
             };
 
             ViewData["Section"] = section;
 
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateProject(CreateProjectViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                foreach (var key in ModelState.Keys)
+                {
+                    var state = ModelState[key];
+                    if (state?.Errors.Count > 0)
+                    {
+                        Console.WriteLine($"{key}: {state.Errors[0].ErrorMessage}");
+                    }
+                }
+
+                return BadRequest("Invalid data.");
+            }
+
+            var user = _context.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+            if (user == null)
+                return BadRequest("Not logged in");
+
+            var project = new ProjectEntity
+            {
+                Image = "/images/ProjectImage1.svg",
+                ProjectName = model.ProjectName,
+                ClientName = model.ClientName,
+                Description = model.Description,
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
+                Budget = model.Budget,
+                UserId = user.Id,
+            };
+
+            _context.Projects.Add(project);
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }

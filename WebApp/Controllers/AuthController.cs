@@ -99,7 +99,7 @@ namespace WebApp.Controllers
                         principal, 
                         authProperties);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { section = "Projects"});
                 }
 
             }
