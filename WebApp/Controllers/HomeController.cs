@@ -31,14 +31,13 @@ namespace WebApp.Controllers
                 CurrentAvatarUrl = user.AvatarUrl
             };
 
-            var projects = _context.Projects.Where(x => x.Id == profile.Id).ToList();
+            var projects = new List<ProjectEntity>();
 
             var teamMembers = _context.Users.Where(x => x.Id != user.Id).ToList();
 
             var model = new HomeViewModel
             {
                 Profile = profile,
-                Projects = projects,
                 TeamMembers = teamMembers
             };
 

@@ -4,6 +4,8 @@ namespace WebApp.Models
 {
     public class ProjectViewModel
     {
+        public string Image { get; set; } = null!;
+
         [Required]
         public string ProjectName { get; set; } = null!;
 

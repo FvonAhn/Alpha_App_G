@@ -21,20 +21,6 @@ function editProfileClose() {
     document.getElementById('edit-profile-card').style.display = 'none';
 }
 
-async function submitEditProfile() {
-    const form = document.getElementById('update-profile');
-    const formData = new FormData(form);
-
-    const response = await fetch('/Account/UpdateProfile', {
-        method: 'POST',
-        body: formData
-    });
-    if (response.ok) {
-        editProfileClose();
-        showSuccessMessage("Profile updated")
-    }
-}
-
 function createProjectOpen() {
     const bg = document.getElementById('add-project-bg');
     const card = document.getElementById('add-project-card');
@@ -63,6 +49,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 })
 
+// Submits
+
+async function submitEditProfile() {
+    const form = document.getElementById('update-profile');
+    const formData = new FormData(form);
+
+    const response = await fetch('/Account/UpdateProfile', {
+        method: 'POST',
+        body: formData
+    });
+    if (response.ok) {
+        editProfileClose();
+        showSuccessMessage("Profile updated")
+    }
+}
+
 async function submitCreateProject() {
 
     console.log("submitCreateProject called");
@@ -76,6 +78,7 @@ async function submitCreateProject() {
     });
     if (response.ok) {
         createProjectClose();
+        reloadProjectsList();
         showSuccessMessage("Project Created")
     } else {
         const errorText = await response.text();
@@ -113,7 +116,22 @@ function showErrorMessage(message) {
 
 function toggleDropdownUser() {
     var dropdown = document.getElementById('dropdown-user');
+    const avatarImg = document.querySelector('.avatar-img')
+
     dropdown.classList.toggle('active');
+    avatarImg.classList.toggle('active');
+}
+
+function toggleDropdownProject(clickedElement) {
+    document.querySelectorAll('.container-projects-menu').forEach(el => {
+        if (el !== clickedElement) {
+            el.classList.remove('show'),
+            el.classList.remove('active');
+        }
+    });
+
+    clickedElement.classList.toggle('show')
+    clickedElement.classList.toggle('active')
 }
 
 // Uploads
@@ -132,6 +150,16 @@ function previewAvatar(input) {
         reader.readAsDataURL(input.files[0]);
     }
 } // denna är avskriven från chatGpt. Jag kopierar aldrig rakt av.
+
+// Button
+
+// Reloads
+
+function reloadProjectsList() {
+    fetch('/Projects/LoadProjectsPartial')
+        .then(response => response.text())
+        .then(html => { document.getElementById('projects-container').innerHTML = html; });
+}
 
 // Logout
 

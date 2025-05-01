@@ -1,5 +1,4 @@
-﻿@using Data.Entities
-@model IEnumerable<Data.Entities.ProjectEntity>
+﻿@model IEnumerable<Data.Entities.ProjectEntity>
 
 <div class="main-top">
     <h2>Projects</h2>
@@ -35,15 +34,35 @@
             <div class="card-projects">
                 <div class="container-projects-top">
                     <div class="container-projects-customer">
-                        <div class="container-projects-img"></div>
+                        <div class="container-projects-img">
+                            <img src="~/images/ProjectImage1.svg" />
+                        </div>
                         <div class="container-projects-text">
                             <h6 class="projectName">@project.ProjectName</h6>
                             <p class="customerName">@project.ClientName</p>
                         </div>
                     </div>
-                    <div class="container-projects-menu">
+                    <div class="container-projects-menu" onclick="toggleDropdownProject(this)">
                         <i class="fa-solid fa-ellipsis"></i>
+
+                        <!-- Project Dropdown Menu -->
+                        <div class="dropdown-project">
+                            <div class="dropdown-project-card">
+                                <div class="dropdown-project-content">
+                                    <i class="fa-solid fa-pen"></i>
+                                    <span>Edit</span>
+                                </div>
+                                <div class="drowdown-project-breaker"></div>
+                                <div class="dropdown-project-content delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                    <span>Delete Project</span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
+
                 </div>
                 <div class="container-projects-description">
                     <span>@project.Description</span>

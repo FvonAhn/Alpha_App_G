@@ -28,11 +28,13 @@ namespace Data.Repositories
 
         // READ
 
-        public virtual async Task<IEnumerable<ProjectEntity>> GetAllProjectsAsync()
+        public virtual async Task<IEnumerable<ProjectEntity>> GetAllProjectsbyUserIdAsync(int userId)
         {
             try
             {
-                return await _context.Projects.ToListAsync();
+                return await _context.Projects
+                    .Where(x => x.UserId == userId)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {

@@ -54,7 +54,7 @@
                 <div class="avatar">
                     <img src="@(@User.FindFirst("AvatarUrl")?.Value ?? "/images/Avatar1.svg")" alt="User Avatar" class="avatar-img">
                 </div>
-                <h7>@(User?.Identity?.Name ?? "Guest")</h7>
+                <h6>@(@User.FindFirst("FullName")?.Value ?? "Guest")</h6>
             </div>
             <div class="dropdown-edit" onclick="editProfileOpen()">
                 <i class="fa-solid fa-pen"></i>
@@ -81,7 +81,13 @@
     <section class="main">
         @if (ViewData["Section"]?.ToString() == "Projects")
         {
-            @await Html.PartialAsync("Partials/_ProjectsPartial", Model.Projects)
+            <div id="projects-container">
+                <script>
+                    fetch('/Projects/LoadProjectsPartial')
+                    .then(response => response.text())
+                    .then(html => {document.getElementById('projects-container').innerHTML = html;});
+                </script>
+            </div>
         }
         else if (ViewData["Section"]?.ToString() == "TeamMembers")
         {

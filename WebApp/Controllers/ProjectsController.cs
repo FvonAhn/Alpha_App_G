@@ -20,14 +20,17 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var projects = await _projectRepository.GetAllProjectsAsync();
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var projects = await _projectRepository.GetAllProjectsbyUserIdAsync(userId);
             return View(projects);
         }
 
         [HttpGet]
-        public IActionResult CreateProject()
+        public async Task<IActionResult> LoadProjectsPartial()
         {
-            return View();
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var projects = await _projectRepository.GetAllProjectsbyUserIdAsync(userId);
+            return PartialView("Partials/_ProjectsPartial", projects);
         }
 
         [HttpPost]
@@ -49,13 +52,14 @@ namespace WebApp.Controllers
                 StartDate = model.StartDate,
                 EndDate = model.EndDate,
                 Budget = model.Budget,
-                UserId = userId
+                UserId = userId,
+                Image = model.Image
             };
 
             await _projectRepository.CreateProjectAsync(project);
 
             TempData["Success"] = "Project created.";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Projects");
 
         }
     }
