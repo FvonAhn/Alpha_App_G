@@ -94,6 +94,14 @@
             @await Html.PartialAsync("Partials/_TeamMembersPartial", Model.TeamMembers)
         }
     </section>
+
+    <!-- Edit Project Modal -->
+    <div class="modal-background" id="edit-project-bg"></div>
+    <div class="modal-add-card" id="edit-project-card">
+        <div id="edit-project-content">
+        </div>
+    </div>
+
 @section Scripts {
     <script src="~/js/site.js"></script>
 }

@@ -62,6 +62,73 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "Projects");
 
         }
+
+        public async Task<IActionResult> DeleteProject(int projectId)
+        {
+            if (projectId <= 0)
+            {
+                return BadRequest("No project found");
+            }
+
+           await _projectRepository.DeleteProjectAsync(projectId);
+
+            TempData["Success"] = "Project deleted.";
+            return Json(new{ success = true });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProject(int projectId)
+        {
+            if (projectId <= 0)
+            {
+                return BadRequest("Invalid project");
+            }
+
+            var project = await _projectRepository.GetProjectByIdAsync(projectId);
+            if (project == null)
+            {
+                return NotFound("Project not found");
+            }
+
+            var viewModel = new ProjectEditViewModel
+            {
+                Id = project.Id,
+                ProjectName = project.ProjectName,
+                ClientName = project.ClientName,
+                Description = project.Description,
+                StartDate = project.StartDate,
+                EndDate = project.EndDate,
+                Budget = project.Budget,
+            };
+            
+            return PartialView("Partials/_EditProjectPartial", viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProject(ProjectEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("Partials/_EditProjectPartial", model);
+            }
+
+            var project = await _projectRepository.GetProjectByIdAsync(model.Id);
+            if (project == null) 
+            {
+                return NotFound("Project not found");
+            }
+
+            project.ProjectName = model.ProjectName!;
+            project.ClientName = model.ClientName!;
+            project.Description = model.Description ?? "";
+            project.StartDate = model.StartDate;
+            project.EndDate = model.EndDate;
+            project.Budget = model.Budget;
+
+            await _projectRepository.UpdateProjectAsync(project);
+
+            return Json(new { success =  true });
+        }
     }
 }
 

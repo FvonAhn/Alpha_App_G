@@ -1,0 +1,46 @@
+﻿@model WebApp.Models.ProjectEditViewModel
+
+    <div class="modal-top">
+        <h3>Edit Project</h3>
+        <div class="close-window" onclick="editProjectClose()">X</div>
+    </div>
+    <div class="modal-picture-wrapper">
+        <div class="modal-picture">
+            <img src="~/images/ProjectImage1.svg"/>
+        </div>
+    </div>
+
+    <form asp-action="UpdateProject" method="post" class="modal-form" onsubmit="submitEditProject(event)">
+        <input type="hidden" asp-for="Id" />
+        <div class="modal-form-wrapper">
+            <label for="project-name">Project Name</label>
+            <input asp-for="ProjectName" class="form-control" placeholder="Project Name"/>
+        </div>
+        <div class="modal-form-wrapper">
+            <label for="client-name">Client Name</label>
+            <input asp-for="ClientName" class="form-control" placeholder="Client Name" /> 
+        </div>
+        <div class="modal-form-wrapper">
+            <label for="project-description">Description</label>
+            <input asp-for="Description" class="form-control" placeholder="Description" />
+        </div>
+        <div class="modal-form-date">
+            <div class="modal-form-startDate">
+                <label class="startDate">Start Date</label>
+                <input asp-for="StartDate" type="date" class="form-control" />
+            </div>
+            <div class="modal-form-endDate">
+                <label class="endDate">End Date</label>
+                <input asp-for="EndDate" type="date" class="form-control" />
+            </div>
+        </div>
+        <div class="modal-form-budget">
+            <label class="budget">Budget</label>
+            <div class="form-control">
+                <span class="currency">€</span>
+                <input asp-for="Budget" type="number" class="modal-form-budget-input" min="0" step="0.01" placeholder="0"/>
+            </div>
+        </div>
+
+        <button type="submit" class="btn">Save</button>
+    </form>

@@ -1,0 +1,10 @@
+﻿<script>
+    editProjectClose();
+
+    fetch('/Projects/LoadProjectsPartial')
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById('projects-container').innerHTML = html;
+            document.getElementById('edit-project-content').innerHTML = html;
+        })
+</script>

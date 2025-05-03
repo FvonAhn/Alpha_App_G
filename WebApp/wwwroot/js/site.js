@@ -1,4 +1,5 @@
-﻿
+﻿console.log("site.js loaded")
+
 // Tooltip
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -49,6 +50,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 })
 
+window.editProjectOpen = function (projectId) {
+    fetch('/Projects/EditProject?projectId=' + projectId)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById("edit-project-content").innerHTML = html;
+            document.getElementById('edit-project-bg').style.display = 'block';
+            document.getElementById('edit-project-card').style.display = 'block';
+        });
+}
+
+function editProjectClose() {
+    document.getElementById('edit-project-bg').style.display = 'none';
+    document.getElementById('edit-project-card').style.display = 'none';
+    document.getElementById('edit-project-content').innerHTML = "";
+}
+
 // Submits
 
 async function submitEditProfile() {
@@ -61,8 +78,44 @@ async function submitEditProfile() {
     });
     if (response.ok) {
         editProfileClose();
-        showSuccessMessage("Profile updated")
+        showSuccessToast("Profile updated")
     }
+}
+
+function submitEditProject(e)
+{
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form)
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    })
+        .then(res => {
+            const contentType = res.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                return res.json();
+            } else {
+                return res.text();
+            }
+        })
+        .then(data => {
+            if (data.success) {
+                editProjectClose();
+
+                fetch('/Projects/LoadProjectsPartial')
+                    .then(res => res.text())
+                    .then(html => {
+                        document.getElementById('projects-container').innerHTML = html;
+
+                        showSuccessToast("Project updated")
+                    });
+            } else {
+                document.getElementById('edit-project-content').innerHTML = data;
+            }
+        });
 }
 
 async function submitCreateProject() {
@@ -110,6 +163,34 @@ function showErrorMessage(message) {
     setTimeout(() => {
         msg.remove();
     }, 3000);
+}
+
+function showSuccessToast(message) {
+    const container = document.getElementById('alert-container')
+
+    const toast = document.createElement('div');
+    toast.className = 'alert-success';
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000)
+}
+
+function showErrorToast(message) {
+    const container = document.getElementById('alert-container')
+
+    const toast = document.createElement('div');
+    toast.className = 'alert-error';
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000)
 }
 
 // Dropdown
