@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<Data.Entities.ProjectEntity>
+@{
+    var startedCount = Model.Count(x => !x.IsCompleted);
+    var completedCount = Model.Count(x => x.IsCompleted);
+}
 
 <form id="antiforgery-holder" style="display:none;">
     @Html.AntiForgeryToken()
@@ -10,9 +14,9 @@
 </div>
 
 <div class="main-mid">
-    <div class="main-link">ALL [<span id="project-count-all">@Model.Count()</span>]</div>
-    <div class="main-link">STARTED [<span id="project-count-started">0</span>]</div>
-    <div class="main-link">COMPLETED [<span id="project-count-completed">0</span>]</div>
+    <div class="main-link" onclick="filterCompletedProjects('all')">ALL [<span id="project-count-all">@Model.Count()</span>]</div>
+    <div class="main-link" onclick="filterCompletedProjects('started')">STARTED [<span id="project-count-started">@startedCount</span>]</div>
+    <div class="main-link" onclick="filterCompletedProjects('completed')">COMPLETED [<span id="project-count-completed">@completedCount</span>]</div>
 </div>
 <div class="main-bottom">
     @if (Model == null || !Model.Any())
@@ -28,14 +32,20 @@
     {
         @foreach (var project in Model)
         {
-            <div class="card-projects">
+            <div class="card-projects" data-status="@(project.IsCompleted ? "completed" : "started")">
                 <div class="container-projects-top">
                     <div class="container-projects-customer">
                         <div class="container-projects-img">
                             <img src="~/images/ProjectImage1.svg" />
                         </div>
                         <div class="container-projects-text">
-                            <h6 class="projectName">@project.ProjectName</h6>
+                            <h6 class="projectName">
+                                @project.ProjectName
+                                @if (project.IsCompleted)
+                                {
+                                    <i class="fa-solid fa-circle-check" style="color: #31D482; margin-left: 6px;"></i>
+                                }
+                            </h6>
                             <p class="customerName">@project.ClientName</p>
                         </div>
                     </div>
@@ -50,7 +60,7 @@
                                     <span>Edit</span>
                                 </div>
                                 <div class="dropdown-project-content" onclick="completeProject(@project.Id)">
-                                    <i class="fa-solid circle-check"></i>
+                                    <i class="fa-solid fa-circle-check"></i>
                                     <span>Completed Project</span>
                                 </div>
 

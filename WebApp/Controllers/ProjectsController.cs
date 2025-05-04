@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
 using Data.Entities;
 using System.Security.Claims;
+using Data.Context;
 
 namespace WebApp.Controllers
 {
@@ -88,7 +89,7 @@ namespace WebApp.Controllers
            await _projectRepository.DeleteProjectAsync(projectId);
 
             TempData["Success"] = "Project deleted.";
-            return Json(new{ success = true });
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -142,6 +143,22 @@ namespace WebApp.Controllers
 
             await _projectRepository.UpdateProjectAsync(project);
             return Json(new { success =  true });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CompleteProject([FromBody] CompleteProjectViewModel model)
+        {
+            if (model == null || model.Id <= 0)
+                return BadRequest();
+
+            var project = await _projectRepository.GetProjectByIdAsync(model.Id);
+            if (project == null)
+                return NotFound();
+
+            project.IsCompleted = true;
+            await _projectRepository.UpdateProjectAsync(project);
+            return Ok();
         }
     }
 }

@@ -150,7 +150,11 @@ function completeProject(projectId) {
     })
         .then(response => {
             if (response.ok) {
-                location.reload();
+                showSuccessMessage("Project Completed")
+                setTimeout(() => {
+                    location.reload();
+
+                }, 3000);
             } else {
                 alert("Failed to completed project");
             }
@@ -250,7 +254,25 @@ function previewAvatar(input) {
     }
 } // denna är avskriven från chatGpt. Jag kopierar aldrig rakt av.
 
-// Button
+// Filters
+
+function filterCompletedProjects(type) {
+    const cards = document.querySelectorAll('.card-projects');
+
+    cards.forEach(card => {
+        const status = card.getAttribute('data-status');
+
+        if (type === 'all' || type === status) {
+            card.style.display = "block";
+        } else {
+            card.style.display = "none";
+        }
+    });
+} 
+
+document.addEventListener('DOMContentLoaded', () => {
+    filterCompletedProjects('all');
+})
 
 // Reloads
 

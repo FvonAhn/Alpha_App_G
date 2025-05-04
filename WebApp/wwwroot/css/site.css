@@ -576,7 +576,7 @@ h6 {
     display: block;
 }
 .dropdown-project-card {
-    height: 115px;
+    height: auto;
     width: 230px;
     display: flex;
     flex-direction: column;
@@ -698,7 +698,9 @@ h6 {
 }
 
 .main-bottom {
+    width: 1170px;
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     padding: 1rem;
 }
