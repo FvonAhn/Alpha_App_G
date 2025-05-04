@@ -91,7 +91,7 @@ namespace WebApp.Controllers
                     var authProperties = new AuthenticationProperties
                     {
                         IsPersistent = model.RememberMe,
-                        ExpiresUtc = DateTime.UtcNow.AddDays(14)
+                        ExpiresUtc = DateTime.UtcNow.AddDays(7)
 
                     };
 
@@ -102,7 +102,6 @@ namespace WebApp.Controllers
 
                     return RedirectToAction("Index", "Home", new { section = "Projects" });
                 }
-
             }
 
             ModelState.AddModelError(string.Empty, "Wrong Email or Password!");

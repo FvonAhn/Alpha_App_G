@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WebApp.Models;
 using Data.Context;
+using Microsoft.AspNetCore.Identity;
+using Data.Entities;
 
 namespace WebApp.Controllers
 {
@@ -27,6 +29,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateProfile(UserEditViewModel model) 
         {
             if (!ModelState.IsValid)
@@ -68,6 +71,12 @@ namespace WebApp.Controllers
                 }
 
                 user.AvatarUrl = "/uploads/" + fileName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.NewPassword)) 
+            {
+                var hasher = new PasswordHasher<UserEntity>();
+                user.Password = hasher.HashPassword(user, model.NewPassword);
             }
 
             await _context.SaveChangesAsync();

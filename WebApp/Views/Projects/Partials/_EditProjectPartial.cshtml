@@ -21,8 +21,9 @@
             <input asp-for="ClientName" class="form-control" placeholder="Client Name" /> 
         </div>
         <div class="modal-form-wrapper">
-            <label for="project-description">Description</label>
-            <input asp-for="Description" class="form-control" placeholder="Description" />
+            <label asp-for="Description">Description</label>
+            <textarea asp-for="Description" class="form-control" id="Description" placeholder="Description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
         </div>
         <div class="modal-form-date">
             <div class="modal-form-startDate">

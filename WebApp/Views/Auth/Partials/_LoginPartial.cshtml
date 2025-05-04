@@ -6,7 +6,7 @@
 <div class="background-login"></div>
 <div class="container login">
     <h1 class="header-login">@ViewData["Title"]</h1>
-    <form asp-controller="Auth" asp-action="Login" method="post" class="form-group login-form">
+    <form id="login" asp-controller="Auth" asp-action="Login" method="post" class="form-group login-form">
         <div class="form-group-email">
             <label asp-for="Email"></label>
             <input asp-for="Email" class="form-control" placeholder="Enter Your Email" id="Email">

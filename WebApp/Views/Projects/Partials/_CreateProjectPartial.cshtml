@@ -24,7 +24,8 @@
     </div>
     <div class="modal-form-wrapper">
         <label asp-for="Description">Description</label>
-        <textarea asp-for="Description" class="form-control description" placeholder="Enter your description"></textarea>
+        <textarea asp-for="Description" class="form-control" id="Description" placeholder="Description"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="modal-form-date">
         <div class="modal-form-dates">

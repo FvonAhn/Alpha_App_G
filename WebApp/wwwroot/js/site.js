@@ -1,6 +1,4 @@
-﻿console.log("site.js loaded")
-
-// Tooltip
+﻿// Tooltip
 
 document.addEventListener('DOMContentLoaded', function () {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -9,6 +7,34 @@ document.addEventListener('DOMContentLoaded', function () {
         new bootstrap.Tooltip(tooltipTriggerEl)
     })
 });
+
+// TinyMCE
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (document.getElementById("Description")) {
+        tinymce.init({
+            selector: '#Description',
+            menubar: false,
+            plugins: 'link lists code',
+            toolbar: 'undo redo | bold italic underline | bullist numlist | link | code',
+            branding: false
+        });
+    }
+});
+
+function initializeTinyMCE() {
+    if (tinymce.get("Description")) {
+        tinymce.get("Description").remove();
+    }
+
+    tinymce.init({
+        selector: '#Description',
+        menubar: false,
+        plugins: 'link lists code',
+        toolbar: 'undo redo | bold italic underline | bullist numlist | link | code',
+        branding: false
+    });
+}
 
 // Modals
 
@@ -32,6 +58,8 @@ function createProjectOpen() {
     }
     bg.style.display = 'block';
     card.style.display = 'block';
+
+    initializeTinyMCE();
 }
 
 function createProjectClose() {
@@ -58,6 +86,8 @@ window.editProjectOpen = function (projectId) {
             document.getElementById('edit-project-bg').style.display = 'block';
             document.getElementById('edit-project-card').style.display = 'block';
         });
+
+    initializeTinyMCE();
 }
 
 function editProjectClose() {
@@ -65,6 +95,185 @@ function editProjectClose() {
     document.getElementById('edit-project-card').style.display = 'none';
     document.getElementById('edit-project-content').innerHTML = "";
 }
+
+// Validation
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("auth-register");
+
+    if (form) {
+        form.addEventListener("submit", function (e) {
+            let isValid = true;
+
+            const fullName = document.getElementById("FullName");
+            const email = document.getElementById("Email");
+            const password = document.getElementById("Password");
+            const confirmPassword = document.getElementById("ConfirmPassword");
+            const terms = document.getElementById("TermsAndConditions");
+
+            [fullName, email, password, confirmPassword].forEach(input => {
+                input.placeholder = input.getAttribute("data-original-placeholder") || input.placeholder;
+                input.classList.remove("input-error");
+            });
+
+            if (fullName.value.trim() === "") {
+                fullName.placeholder = "Full name is required";
+                fullName.classList.add("input-error");
+                isValid = false;
+            }
+
+            if (email.value.trim() === "") {
+                email.placeholder = "Email is required";
+                email.classList.add("input-error");
+                isValid = false;
+            } else if (!email.value.includes("@")) {
+                email.value = "";
+                email.placeholder = "Enter a valid email";
+                email.classList.add("input-error");
+                isValid = false;
+            }
+
+            if (password.value.length < 6) {
+                password.value = "";
+                password.placeholder = "Min 6 characters";
+                password.classList.add("input-error");
+                isValid = false;
+            }
+
+            if (confirmPassword.value !== password.value) {
+                confirmPassword.value = "";
+                confirmPassword.placeholder = "Passwords do not match";
+                confirmPassword.classList.add("input-error");
+                isValid = false;
+            }
+
+            if (isValid && !terms.checked) {
+                alert("You must agree to the terms and conditions.");
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+
+        ["FullName", "Email", "Password", "ConfirmPassword"].forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.setAttribute("data-original-placeholder", input.placeholder);
+            }
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const loginForm = document.getElementById("login");
+
+    if (loginForm) {
+        loginForm.addEventListener("submit", function (e) {
+            let isValid = true;
+
+            const email = document.getElementById("Email");
+            const password = document.getElementById("Password");
+
+            [email, password].forEach(input => {
+                input.placeholder = input.getAttribute("data-original-placeholder") || input.placeholder;
+                input.classList.remove("input-error");
+            });
+
+            if (email.value.trim() === "") {
+                email.placeholder = "Email is required";
+                email.classList.add("input-error");
+                isValid = false;
+            } else if (!email.value.includes("@")) {
+                email.value = "";
+                email.placeholder = "Enter a valid email";
+                email.classList.add("input-error");
+                isValid = false;
+            }
+
+            if (password.value.trim() === "") {
+                password.placeholder = "Password is required";
+                password.classList.add("input-error");
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+
+        ["Email", "Password"].forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.setAttribute("data-original-placeholder", input.placeholder);
+            }
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("edit-profile-form");
+
+    if (form) {
+        form.addEventListener("submit", function (e) {
+            const fullName = document.getElementById("FullName");
+            const email = document.getElementById("Email");
+            const newPassword = document.getElementById("NewPassword");
+            const confirmPassword = document.getElementById("ConfirmNewPassword");
+
+            let isValid = true;
+
+            [fullName, email, newPassword, confirmPassword].forEach(input => {
+                if (input) {
+                    input.classList.remove("input-error");
+                    input.placeholder = input.getAttribute("data-original-placeholder") || input.placeholder;
+                }
+            });
+
+            if (fullName && fullName.value.trim() === "") {
+                fullName.placeholder = "Full name is required";
+                fullName.classList.add("input-error");
+                isValid = false;
+            }
+
+            if (email && email.value.trim() !== "") {
+                if (!email.value.includes("@") || !email.value.includes(".")) {
+                    email.value = "";
+                    email.placeholder = "Invalid email";
+                    email.classList.add("input-error");
+                    isValid = false;
+                }
+            }
+
+            if (newPassword && newPassword.value.length > 0 && newPassword.value.length < 6) {
+                newPassword.value = "";
+                newPassword.placeholder = "Min 6 characters";
+                newPassword.classList.add("input-error");
+                isValid = false;
+            }
+
+            if (newPassword && newPassword.value.length > 0) {
+                if (confirmPassword.value !== newPassword.value) {
+                    confirmPassword.value = "";
+                    confirmPassword.placeholder = "Passwords do not match";
+                    confirmPassword.classList.add("input-error");
+                    isValid = false;
+                }
+            }
+
+            if (!isValid) e.preventDefault();
+        });
+
+        ["FullName", "Email", "NewPassword", "ConfirmNewPassword"].forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.setAttribute("data-original-placeholder", input.placeholder);
+            }
+        });
+    }
+});
+
 
 // Submits
 
@@ -154,7 +363,7 @@ function completeProject(projectId) {
                 setTimeout(() => {
                     location.reload();
 
-                }, 3000);
+                }, 1500);
             } else {
                 alert("Failed to completed project");
             }
@@ -252,7 +461,7 @@ function previewAvatar(input) {
         }
         reader.readAsDataURL(input.files[0]);
     }
-} // denna är avskriven från chatGpt. Jag kopierar aldrig rakt av.
+}
 
 // Filters
 

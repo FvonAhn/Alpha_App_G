@@ -2,21 +2,37 @@
 
 <div class="modal-picture-wrapper">
     <div class="modal-picture" onclick="avatarUpload()">
-        <img id="avatar-preview"src="@Model.CurrentAvatarUrl" alt="Current Avatar">
+        <img id="avatar-preview" src="@Model.CurrentAvatarUrl" alt="Current Avatar">
     </div>
 </div>
 
 <form asp-controller="Account" asp-action="UpdateProfile" method="post" enctype="multipart/form-data" class="modal-form" id="update-profile">
-<input type="file" id="avatar-upload" name="NewAvatar" style="display: none;" onchange="previewAvatar(this)">
-    <input asp-for="Id" type="hidden"/>
+    <input type="file" id="avatar-upload" name="NewAvatar" style="display: none;" onchange="previewAvatar(this)">
+    <input asp-for="Id" type="hidden" />
+
     <div class="modal-form-wrapper">
         <label asp-for="FullName">Full Name</label>
-        <input asp-for="FullName" class="form-control" id="full-name" placeholder="Full Name" />
+        <input asp-for="FullName" class="form-control" id="FullName" placeholder="Full Name" />
     </div>
+
     <div class="modal-form-wrapper">
         <label asp-for="Email">Email</label>
-        <input asp-for="Email" class="form-control" id="email" placeholder="Email" /> 
+        <input asp-for="Email" class="form-control" id="Email" placeholder="Email" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
+
+    <div class="modal-form-wrapper">
+        <label asp-for="NewPassword">New Password</label>
+        <input asp-for="NewPassword" class="form-control" id="NewPassword" placeholder="New password" />
+        <span asp-validation-for="NewPassword" class="text-danger"></span>
+    </div>
+
+    <div class="modal-form-wrapper">
+        <label asp-for="ConfirmNewPassword">Confirm New Password</label>
+        <input asp-for="ConfirmNewPassword" class="form-control" id="ConfirmNewPassword" placeholder="Confirm new password" />
+        <span asp-validation-for="ConfirmNewPassword" class="text-danger"></span>
+    </div>
+
     <button type="submit" class="btn" onclick="submitEditProfile()">Save</button>
 </form>
+
