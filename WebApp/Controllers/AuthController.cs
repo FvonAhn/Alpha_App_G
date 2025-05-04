@@ -100,16 +100,14 @@ namespace WebApp.Controllers
                         principal, 
                         authProperties);
 
-                    return RedirectToAction("Index", "Home", new { section = "Projects"});
+                    return RedirectToAction("Index", "Home", new { section = "Projects" });
                 }
 
             }
 
             ModelState.AddModelError(string.Empty, "Wrong Email or Password!");
             ViewBag.View = "Login";
-            return View("Index", model);
-            
-              
+            return View("Index", model);      
         }
     }
 }

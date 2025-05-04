@@ -139,6 +139,24 @@ async function submitCreateProject() {
     }
 }
 
+function completeProject(projectId) {
+    fetch('/Projects/completeProject', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+        },
+        body: JSON.stringify({ id: projectId })
+    })
+        .then(response => {
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert("Failed to completed project");
+            }
+        });
+}
+
 // Alerts
 
 function showSuccessMessage(message) {

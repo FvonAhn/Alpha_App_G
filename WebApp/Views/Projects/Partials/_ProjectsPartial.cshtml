@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<Data.Entities.ProjectEntity>
 
+<form id="antiforgery-holder" style="display:none;">
+    @Html.AntiForgeryToken()
+</form>
+
 <div class="main-top">
     <h2>Projects</h2>
     <button class="btn main-btn" onclick="createProjectOpen()">+ Add Project</button>
@@ -45,6 +49,10 @@
                                     <i class="fa-solid fa-pen"></i>
                                     <span>Edit</span>
                                 </div>
+                                <div class="dropdown-project-content" onclick="completeProject(@project.Id)">
+                                    <i class="fa-solid circle-check"></i>
+                                    <span>Completed Project</span>
+                                </div>
 
                                 <div class="drowdown-project-breaker"></div>
                                 <form method="post" action="/Projects/DeleteProject" onsubmit="return confirm('Sure you want to delete project?')">
@@ -62,11 +70,12 @@
                 </div>
             </div>
         }
-
-        <!-- Add Projects Modal -->
-        <div class="modal-background" id="add-project-bg" onclick="createProjectClose()"></div>
-        <div class="modal-add-card" id="add-project-card">
-            @await Html.PartialAsync("Partials/_CreateProjectPartial", new CreateProjectViewModel())
-        </div>
     }
+    <!-- Add Projects Modal -->
+    <div class="modal-background" id="add-project-bg" onclick="createProjectClose()"></div>
+    <div class="modal-add-card" id="add-project-card">
+
+        @await Html.PartialAsync("Partials/_CreateProjectPartial", new CreateProjectViewModel())
+
+    </div>
 </div>

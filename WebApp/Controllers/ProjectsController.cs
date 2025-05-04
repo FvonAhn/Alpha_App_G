@@ -20,14 +20,28 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            var rawId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Console.WriteLine($"[CLAIM] NameIdentifier= {rawId}");
+            if (string.IsNullOrEmpty(rawId))
+            {
+                return Content("❌ Inloggnig sakkas, NameIdentifier finns inte");
+            }
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var projects = await _projectRepository.GetAllProjectsbyUserIdAsync(userId);
+
+            Console.WriteLine($"[DEBUG] Antal projekt för user {userId}: {projects.Count()}");
+
             return View(projects);
         }
 
         [HttpGet]
         public async Task<IActionResult> LoadProjectsPartial()
         {
+            foreach (var claim in User.Claims)
+            {
+                Console.WriteLine($"[CLAIM] {claim.Type}: {claim.Value}");
+            }
+
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var projects = await _projectRepository.GetAllProjectsbyUserIdAsync(userId);
             return PartialView("Partials/_ProjectsPartial", projects);
@@ -127,7 +141,6 @@ namespace WebApp.Controllers
             project.Budget = model.Budget;
 
             await _projectRepository.UpdateProjectAsync(project);
-
             return Json(new { success =  true });
         }
     }
