@@ -53,7 +53,8 @@ namespace WebApp.Controllers
                 EndDate = model.EndDate,
                 Budget = model.Budget,
                 UserId = userId,
-                Image = model.Image
+                Image = model.Image,
+                IsCompleted = model.IsCompleted,
             };
 
             await _projectRepository.CreateProjectAsync(project);

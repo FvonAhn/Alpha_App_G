@@ -21,5 +21,7 @@ namespace WebApp.Models
 
         [Required]
         public decimal Budget { get; set; }
+
+        public bool IsCompleted { get; set; }
     }
 }
