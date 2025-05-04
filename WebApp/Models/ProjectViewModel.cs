@@ -11,6 +11,8 @@ namespace WebApp.Models
 
         [Required]
         public string ClientName { get; set; } = null!;
+
+        [Required]
         public string Description { get; set; } = null!;
 
         [Required]  

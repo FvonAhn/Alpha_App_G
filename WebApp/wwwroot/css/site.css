@@ -826,6 +826,21 @@ h6 {
         box-shadow: inset 0 2px 5px rgba(0,0,0, 0.5);
     }
 
+/* TinyMCE */
+
+.tox-toolbar {
+    margin-top: 8px;
+    border-top: 1px solid #ccc;
+}
+
+.tox-tinymce {
+    height: 180px !important;
+}
+
+.tox-edit-area iframe {
+    height: 140px !important;
+}
+
 /* test */
 
 .test-background {

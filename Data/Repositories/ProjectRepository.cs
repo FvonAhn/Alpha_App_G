@@ -74,9 +74,15 @@ namespace Data.Repositories
                 existingProject.StartDate = updatedProject.StartDate;
                 existingProject.EndDate = updatedProject.EndDate;
                 existingProject.Budget = updatedProject.Budget;
-     
+                existingProject.IsCompleted = updatedProject.IsCompleted;
+
+                _context.Entry(existingProject).Property(x => x.Description).IsModified = true;
 
                 await _context.SaveChangesAsync();
+
+                var saved = await _context.Projects.FirstOrDefaultAsync(x => x.Id == updatedProject.Id);
+                Console.WriteLine("I databasen just nu: " + saved.Description);
+
                 return true;
             }
             catch (Exception ex) 

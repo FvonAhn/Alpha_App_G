@@ -21,16 +21,8 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var rawId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Console.WriteLine($"[CLAIM] NameIdentifier= {rawId}");
-            if (string.IsNullOrEmpty(rawId))
-            {
-                return Content("❌ Inloggnig sakkas, NameIdentifier finns inte");
-            }
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var projects = await _projectRepository.GetAllProjectsbyUserIdAsync(userId);
-
-            Console.WriteLine($"[DEBUG] Antal projekt för user {userId}: {projects.Count()}");
 
             return View(projects);
         }
@@ -38,11 +30,6 @@ namespace WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> LoadProjectsPartial()
         {
-            foreach (var claim in User.Claims)
-            {
-                Console.WriteLine($"[CLAIM] {claim.Type}: {claim.Value}");
-            }
-
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
             var projects = await _projectRepository.GetAllProjectsbyUserIdAsync(userId);
             return PartialView("Partials/_ProjectsPartial", projects);
@@ -53,6 +40,15 @@ namespace WebApp.Controllers
         {
             if (!ModelState.IsValid) 
             {
+                foreach (var entry in ModelState)
+                {
+                    var key = entry.Key;
+                    foreach (var error in entry.Value.Errors)
+                    {
+                        Console.WriteLine($"Fält: {key}, Fel: {error.ErrorMessage}");
+                    }
+                }
+
                 TempData["Error"] = "Wrong information";
                 return View(model);
             }
@@ -123,6 +119,8 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProject(ProjectEditViewModel model)
         {
+            Console.WriteLine("Model.Description: " + model.Description);
+
             if (!ModelState.IsValid)
             {
                 return PartialView("Partials/_EditProjectPartial", model);
@@ -137,6 +135,7 @@ namespace WebApp.Controllers
             project.ProjectName = model.ProjectName!;
             project.ClientName = model.ClientName!;
             project.Description = model.Description ?? "";
+            Console.WriteLine("project.Description satt till: " + project.Description);
             project.StartDate = model.StartDate;
             project.EndDate = model.EndDate;
             project.Budget = model.Budget;

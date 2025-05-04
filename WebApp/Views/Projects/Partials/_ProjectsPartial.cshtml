@@ -76,7 +76,9 @@
                     </div>
                 </div>
                 <div class="container-projects-description">
-                    <span>@project.Description</span>
+                    <div class="project-description">
+                        @Html.Raw(project.Description)
+                    </div>
                 </div>
             </div>
         }

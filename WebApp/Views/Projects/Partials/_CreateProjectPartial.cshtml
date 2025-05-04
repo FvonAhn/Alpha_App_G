@@ -11,7 +11,7 @@
         <img src="~/images/ProjectImage1.svg" />
     </div>
 </div>
-<form asp-action="CreateProject" method="post" class="modal-form" id="create-project">
+<form asp-action="CreateProject" method="post" enctype="multipart/form-data" class="modal-form" id="create-project">
     <div class="modal-form-wrapper">
         <label asp-for="ProjectName">Project Name</label>
         <input asp-for="ProjectName" class="form-control" placeholder="Project Name" />

@@ -10,18 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // TinyMCE
 
-document.addEventListener("DOMContentLoaded", function () {
-    if (document.getElementById("Description")) {
-        tinymce.init({
-            selector: '#Description',
-            menubar: false,
-            plugins: 'link lists code',
-            toolbar: 'undo redo | bold italic underline | bullist numlist | link | code',
-            branding: false
-        });
-    }
-});
-
 function initializeTinyMCE() {
     if (tinymce.get("Description")) {
         tinymce.get("Description").remove();
@@ -29,12 +17,14 @@ function initializeTinyMCE() {
 
     tinymce.init({
         selector: '#Description',
+        height: 150,
         menubar: false,
         plugins: 'link lists code',
         toolbar: 'undo redo | bold italic underline | bullist numlist | link | code',
         branding: false
     });
 }
+
 
 // Modals
 
@@ -85,9 +75,9 @@ window.editProjectOpen = function (projectId) {
             document.getElementById("edit-project-content").innerHTML = html;
             document.getElementById('edit-project-bg').style.display = 'block';
             document.getElementById('edit-project-card').style.display = 'block';
-        });
 
-    initializeTinyMCE();
+            initializeTinyMCE();
+        });
 }
 
 function editProjectClose() {
@@ -293,6 +283,8 @@ async function submitEditProfile() {
 
 function submitEditProject(e)
 {
+    tinymce.triggerSave();
+
     e.preventDefault();
 
     const form = e.target;
@@ -328,8 +320,7 @@ function submitEditProject(e)
 }
 
 async function submitCreateProject() {
-
-    console.log("submitCreateProject called");
+    tinymce.triggerSave();
 
     const form = document.getElementById('create-project');
     const formData = new FormData(form);
